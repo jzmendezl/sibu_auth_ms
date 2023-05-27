@@ -21,8 +21,10 @@ services:
     ports:
       - "5050:80"
     environment:
-      PGADMIN_DEFAULT_EMAIL: juan@unal.com
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
       PGADMIN_DEFAULT_PASSWORD: admin
+    depends_on:
+      - sibu_auth_db
     volumes:
       - pgadmin-data:/var/lib/pgadmin
 
@@ -31,6 +33,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    restart: always
     ports:
       - 3000:3000
     depends_on:
