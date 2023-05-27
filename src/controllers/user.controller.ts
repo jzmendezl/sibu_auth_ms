@@ -5,7 +5,7 @@ import { validateEmail, validatePassword } from '../utils/validate'
 
 export const logout = async (req: Request, res: Response) => {
   try {
-    const user = await User.findOne({ where: { id: req.params } })
+    const user = await User.findOne({ where: { id: res.locals.UID } })
 
     if (!user) {
       return res.status(400).json({ message: 'User not found' })
@@ -22,6 +22,20 @@ export const logout = async (req: Request, res: Response) => {
 }
 
 export const getUser = async (req: Request, res: Response) => {
+  try {
+    const user = await User.findOne({ where: { id: res.locals.UID } })
+
+    if (!user) {
+      return res.status(400).json({ message: 'User not found' })
+    }
+
+    return res.status(200).json(user)
+  } catch (error) {
+    return res.status(500).json(error)
+  }
+}
+
+export const getUserByID = async (req: Request, res: Response) => {
   try {
     const user = await User.findOne({ where: { id: req.params } })
 
@@ -57,7 +71,7 @@ export const updateUser = async (req: Request, res: Response) => {
       return res.status(400).json({ message: 'Invalid password' })
     }
 
-    const user = await User.findOne({ where: { id: req.params } })
+    const user = await User.findOne({ where: { id: res.locals.UID } })
 
     if (!user) {
       return res.status(400).json({ message: 'User not found' })
@@ -78,7 +92,7 @@ export const updateUser = async (req: Request, res: Response) => {
 
 export const deleteUser = async (req: Request, res: Response) => {
   try {
-    const user = await User.findOne({ where: { id: req.params } })
+    const user = await User.findOne({ where: { id: res.locals.UID } })
 
     if (!user) {
       return res.status(400).json({ message: 'User not found' })

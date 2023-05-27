@@ -37,16 +37,16 @@ User.init(
       allowNull: false,
     },
     name: {
-      type: DataTypes.STRING(50),
+      type: DataTypes.STRING,
       allowNull: false,
     },
     email: {
-      type: DataTypes.STRING(50),
+      type: DataTypes.STRING,
       allowNull: false,
       unique: true,
     },
     password: {
-      type: DataTypes.STRING(50),
+      type: DataTypes.STRING,
       allowNull: false,
     },
     role: {
@@ -55,7 +55,7 @@ User.init(
       defaultValue: 'user',
     },
     token: {
-      type: DataTypes.STRING(50),
+      type: DataTypes.STRING,
       allowNull: true,
     },
     createdAt: {
@@ -70,7 +70,6 @@ User.init(
     },
   },
   {
-    tableName: 'users',
     sequelize,
   }
 )

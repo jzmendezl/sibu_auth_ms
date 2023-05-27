@@ -2,6 +2,7 @@ import { Router } from 'express'
 import {
   deleteUser,
   getUser,
+  getUserByID,
   getUsers,
   logout,
   updateUser,
@@ -10,11 +11,13 @@ import { authMiddleware } from '../middleware/authMiddleware'
 
 const router = Router()
 
+router.get('/all', getUsers)
+
 router.get('/logout', authMiddleware, logout)
 
 router.get('/', authMiddleware, getUser)
 
-router.get('/all', authMiddleware, getUsers)
+router.get('/:id', authMiddleware, getUserByID)
 
 router.put('/', authMiddleware, updateUser)
 

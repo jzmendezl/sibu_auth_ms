@@ -40,6 +40,10 @@ export const createUser = async (req: Request, res: Response) => {
 
     newUser.token = token
 
+    console.log('====================================')
+    console.log(newUser)
+    console.log('====================================')
+
     const user = await newUser.save()
 
     return res.status(201).json({ user, token })
