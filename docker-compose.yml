@@ -1,0 +1,36 @@
+version: '3.9'
+name: 'auht_ms'
+
+services:
+  sibu_auth_db:
+    image: postgres:13.2-alpine
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_DB: postgres
+    ports:
+      - 5432:5432
+    volumes:
+      - auth_data:/var/lib/postgresql/data
+
+  sibu_auth_ms:
+    image: sibu_auth_ms
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 3000:3000
+    depends_on:
+      - db
+    environment:
+      - PORT: 3000
+      - POSTGRES_HOST: sibu_auth_db
+      - POSTGRES_PORT: 5432
+      - POSTGRES_DB: postgres
+      - POSTGRES_PASSWORD: postgres
+      - POSTGRES_USER: postgres
+      - JWT_SECRET: secret
+
+volumes:
+  auth_data:
